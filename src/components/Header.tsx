@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { Menu, X, ChevronDown, Briefcase, MapPin, Wrench, Calculator, MessageCircle, Sparkles, TrendingUp, Bell, ArrowRight } from 'lucide-react'
+import { Menu, X, ChevronDown, MessageCircle, ArrowRight } from 'lucide-react'
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -22,19 +22,16 @@ const resourcesMenu = {
       name: 'Budget Calculator',
       href: '/calculator',
       description: 'What can you actually afford?',
-      icon: Calculator,
     },
     {
       name: 'House or Nah Quiz',
       href: '/house-or-nah',
       description: 'Discover your style preferences',
-      icon: Sparkles,
     },
     {
       name: '$700K Showdown',
       href: '/showdown',
       description: 'Compare homes at same price point',
-      icon: TrendingUp,
     },
   ],
   explore: [
@@ -42,19 +39,16 @@ const resourcesMenu = {
       name: 'Neighborhoods',
       href: '/neighborhoods',
       description: 'Explore Metro Atlanta areas',
-      icon: MapPin,
     },
     {
       name: 'Our Services',
       href: '/services',
       description: 'Buying, selling & more',
-      icon: Briefcase,
     },
     {
       name: 'Trusted Vendors',
       href: '/vendors',
       description: 'Our recommended partners',
-      icon: Wrench,
     },
   ],
 }
@@ -74,19 +68,15 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-soft py-3'
-          : 'bg-transparent py-5'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-white/95 backdrop-blur-md ${
+        scrolled ? 'shadow-soft py-3' : 'py-4'
       }`}
     >
       <nav className="container-width flex items-center justify-between px-6 md:px-8">
         {/* Logo */}
         <Link
           href="/"
-          className={`text-xl md:text-2xl font-serif tracking-wide transition-colors duration-300 ${
-            scrolled ? 'text-sage hover:text-coral' : 'text-white hover:text-coral'
-          }`}
+          className="text-xl md:text-2xl font-serif tracking-wide transition-colors duration-300 text-sage hover:text-coral"
         >
           Emily Hanley Homes
         </Link>
@@ -102,9 +92,7 @@ export function Header() {
             >
               {item.megaMenu ? (
                 <button
-                  className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium tracking-wide transition-all duration-300 ${
-                    scrolled ? 'text-sage hover:text-coral' : 'text-white/90 hover:text-white'
-                  }`}
+                  className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium tracking-wide transition-all duration-300 text-sage hover:text-coral"
                 >
                   {item.name}
                   <ChevronDown
@@ -116,9 +104,7 @@ export function Header() {
               ) : (
                 <Link
                   href={item.href}
-                  className={`px-4 py-2 text-sm font-medium tracking-wide transition-all duration-300 ${
-                    scrolled ? 'text-sage hover:text-coral' : 'text-white/90 hover:text-white'
-                  }`}
+                  className="px-4 py-2 text-sm font-medium tracking-wide transition-all duration-300 text-sage hover:text-coral"
                 >
                   {item.name}
                 </Link>
@@ -137,11 +123,11 @@ export function Header() {
                     {/* Top accent */}
                     <div className="h-1 bg-gradient-to-r from-coral via-coral-dark to-coral" />
 
-                    <div className="p-8">
+                    <div className="p-6">
                       <div className="grid grid-cols-2 gap-8">
                         {/* Tools Column */}
                         <div>
-                          <h3 className="text-xs font-medium tracking-wider uppercase text-sage-muted mb-4">
+                          <h3 className="text-xs font-medium tracking-wider uppercase text-sage-muted mb-3">
                             Interactive Tools
                           </h3>
                           <div className="space-y-1">
@@ -149,19 +135,14 @@ export function Header() {
                               <Link
                                 key={item.name}
                                 href={item.href}
-                                className="group flex items-start gap-4 p-3 -mx-3 rounded-lg hover:bg-cream transition-all duration-300"
+                                className="group block p-2 -mx-2 rounded-lg hover:bg-cream transition-all duration-300"
                               >
-                                <div className="w-10 h-10 rounded-lg bg-coral/10 flex items-center justify-center flex-shrink-0 group-hover:bg-coral group-hover:scale-105 transition-all duration-300">
-                                  <item.icon className="w-5 h-5 text-coral group-hover:text-white transition-colors duration-300" />
-                                </div>
-                                <div className="pt-0.5">
-                                  <span className="block font-medium text-sage group-hover:text-coral transition-colors duration-300">
-                                    {item.name}
-                                  </span>
-                                  <span className="text-sm text-sage-light leading-snug">
-                                    {item.description}
-                                  </span>
-                                </div>
+                                <span className="block font-medium text-sage group-hover:text-coral transition-colors duration-300">
+                                  {item.name}
+                                </span>
+                                <span className="text-sm text-sage-light leading-snug">
+                                  {item.description}
+                                </span>
                               </Link>
                             ))}
                           </div>
@@ -169,7 +150,7 @@ export function Header() {
 
                         {/* Explore Column */}
                         <div>
-                          <h3 className="text-xs font-medium tracking-wider uppercase text-sage-muted mb-4">
+                          <h3 className="text-xs font-medium tracking-wider uppercase text-sage-muted mb-3">
                             Explore
                           </h3>
                           <div className="space-y-1">
@@ -177,19 +158,14 @@ export function Header() {
                               <Link
                                 key={item.name}
                                 href={item.href}
-                                className="group flex items-start gap-4 p-3 -mx-3 rounded-lg hover:bg-cream transition-all duration-300"
+                                className="group block p-2 -mx-2 rounded-lg hover:bg-cream transition-all duration-300"
                               >
-                                <div className="w-10 h-10 rounded-lg bg-sage/10 flex items-center justify-center flex-shrink-0 group-hover:bg-sage group-hover:scale-105 transition-all duration-300">
-                                  <item.icon className="w-5 h-5 text-sage group-hover:text-white transition-colors duration-300" />
-                                </div>
-                                <div className="pt-0.5">
-                                  <span className="block font-medium text-sage group-hover:text-coral transition-colors duration-300">
-                                    {item.name}
-                                  </span>
-                                  <span className="text-sm text-sage-light leading-snug">
-                                    {item.description}
-                                  </span>
-                                </div>
+                                <span className="block font-medium text-sage group-hover:text-coral transition-colors duration-300">
+                                  {item.name}
+                                </span>
+                                <span className="text-sm text-sage-light leading-snug">
+                                  {item.description}
+                                </span>
                               </Link>
                             ))}
                           </div>
@@ -197,16 +173,11 @@ export function Header() {
                       </div>
 
                       {/* Bottom CTA */}
-                      <div className="mt-6 pt-6 border-t border-sand-light">
+                      <div className="mt-5 pt-5 border-t border-sand-light">
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-coral/10 flex items-center justify-center">
-                              <Bell className="w-5 h-5 text-coral" />
-                            </div>
-                            <div>
-                              <span className="block font-medium text-sage text-sm">Off-Market Alerts</span>
-                              <span className="text-xs text-sage-light">Get homes before they hit MLS</span>
-                            </div>
+                          <div>
+                            <span className="block font-medium text-sage text-sm">Off-Market Alerts</span>
+                            <span className="text-xs text-sage-light">Get homes before they hit MLS</span>
                           </div>
                           <Link
                             href="/contact?interest=off-market"
@@ -284,33 +255,31 @@ export function Header() {
                     </span>
 
                     {/* Tools */}
-                    <div className="mt-4 space-y-3">
+                    <div className="mt-4 space-y-2">
                       <span className="text-xs text-sage-light uppercase tracking-wide">Tools</span>
                       {resourcesMenu.tools.map((child) => (
                         <Link
                           key={child.name}
                           href={child.href}
-                          className="flex items-center gap-3 py-2 text-sage hover:text-coral transition-colors"
+                          className="block py-2 text-sage hover:text-coral transition-colors"
                           onClick={() => setMobileMenuOpen(false)}
                         >
-                          <child.icon className="w-5 h-5 text-coral" />
-                          <span>{child.name}</span>
+                          {child.name}
                         </Link>
                       ))}
                     </div>
 
                     {/* Explore */}
-                    <div className="mt-6 space-y-3">
+                    <div className="mt-6 space-y-2">
                       <span className="text-xs text-sage-light uppercase tracking-wide">Explore</span>
                       {resourcesMenu.explore.map((child) => (
                         <Link
                           key={child.name}
                           href={child.href}
-                          className="flex items-center gap-3 py-2 text-sage hover:text-coral transition-colors"
+                          className="block py-2 text-sage hover:text-coral transition-colors"
                           onClick={() => setMobileMenuOpen(false)}
                         >
-                          <child.icon className="w-5 h-5 text-sage" />
-                          <span>{child.name}</span>
+                          {child.name}
                         </Link>
                       ))}
                     </div>
