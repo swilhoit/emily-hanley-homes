@@ -1,10 +1,15 @@
+'use client'
+
 import Link from 'next/link'
-import { Users, Heart, Home, Clock, Star, MessageCircle, Instagram, Mail } from 'lucide-react'
+import Image from 'next/image'
+import { Heart, Home, Clock, Star, MessageCircle, Instagram, Mail, Phone, Quote, ArrowRight, Sparkles } from 'lucide-react'
+import { useState, useEffect } from 'react'
 
 const teamMembers = [
   {
     name: 'Emily Hanley',
-    role: 'Founder & Agent',
+    role: 'Founder & Lead Agent',
+    image: '/images/team-emily.jpg',
     bio: `I grew up in East Cobb, Metro Atlanta, and I'm a proud UGA grad. After years in financial technology sales, I realized I wanted something more personal—a way to actually help people through one of the biggest decisions of their lives.
 
 Six years and 100+ homes later, I still get excited when I find the perfect home for a client. I'll be the first to tell you if a house isn't right—even if it means losing the sale. Your trust matters more than my commission.`,
@@ -21,11 +26,13 @@ Six years and 100+ homes later, I still get excited when I find the perfect home
     ],
     email: 'emily@emilyhanleyhomes.com',
     instagram: '@emilyhanley_homes',
-    phone: '678-707-9385'
+    phone: '678-707-9385',
+    accent: 'coral'
   },
   {
     name: 'Lindsay Young',
     role: 'Lead Agent',
+    image: '/images/team-lindsay.jpg',
     bio: `I'm a Chicago transplant who fell in love with Atlanta's neighborhoods and never looked back. With a Finance and Real Estate degree from Alabama (Roll Tide!), I bring 10+ years of Atlanta experience to every showing.
 
 My philosophy? Honesty, integrity, hard work, and patience. I won't rush you into a decision or sugarcoat issues with a property. I'd rather find you the RIGHT home than the RIGHT NOW home.`,
@@ -40,11 +47,13 @@ My philosophy? Honesty, integrity, hard work, and patience. I won't rush you int
       'Fitness enthusiast (ask me about my favorite Atlanta trails)',
       'Will debate Alabama football with anyone'
     ],
-    instagram: '@lnyoung1'
+    instagram: '@lnyoung1',
+    accent: 'sage'
   },
   {
     name: 'Alicia Bechtel',
     role: 'Executive Assistant & Agent',
+    image: '/images/team-alicia.jpg',
     bio: `I'm a Georgia native who literally grew up flipping houses with my family—so I've been in this industry since before I knew it was a career. With 200+ transactions under my belt, I'm the one making sure nothing falls through the cracks.
 
 I'm your behind-the-scenes support, keeping the process organized so you can focus on the exciting stuff: finding your dream home.`,
@@ -60,135 +69,254 @@ I'm your behind-the-scenes support, keeping the process organized so you can foc
       'Probably already sent you the next step before you asked'
     ],
     email: 'alicia@emilyhanleyhomes.com',
-    instagram: '@licilauren'
+    instagram: '@licilauren',
+    accent: 'coral'
   }
 ]
 
+const stats = [
+  { value: '400+', label: 'Homes Sold', description: 'Experience you can trust' },
+  { value: '21', label: 'Years Combined', description: 'In Atlanta real estate' },
+  { value: '2hr', label: 'Response Time', description: 'Guaranteed' },
+  { value: '90+', label: 'Five-Star Reviews', description: 'From real clients' },
+]
+
 export default function AboutPage() {
+  const [activeTeamMember, setActiveTeamMember] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    setIsVisible(true)
+  }, [])
+
   return (
-    <div className="pt-16">
-      {/* Hero */}
-      <section className="section-padding bg-sage">
-        <div className="container-width text-center text-white">
-          <h1 className="text-4xl md:text-5xl font-serif mb-4">Here&apos;s What You Need to Know About Us</h1>
-          <p className="text-xl text-white/80 max-w-2xl mx-auto">
-            We&apos;re not a faceless brokerage. We&apos;re three people who actually care
-            about finding you the right home—not just any home.
-          </p>
+    <div className="pt-16 overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative min-h-[70vh] flex items-center bg-sage overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-coral blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-white blur-3xl" />
+        </div>
+
+        <div className="container-width px-6 md:px-8 py-20 relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <span className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 px-4 py-2 text-sm font-medium tracking-wide uppercase mb-8">
+                <Sparkles className="w-4 h-4" />
+                Meet Our Team
+              </span>
+
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-6 leading-tight">
+                Real People Who
+                <span className="block text-coral">Actually Care</span>
+              </h1>
+
+              <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed max-w-2xl mx-auto">
+                We&apos;re not a faceless brokerage. We&apos;re three people who will tell you the truth—even when it costs us a sale.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Wave */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+            <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#FFFBF7"/>
+          </svg>
         </div>
       </section>
 
-      {/* Our Approach */}
-      <section className="section-padding bg-white">
+      {/* Our Philosophy */}
+      <section className="section-padding bg-warm-white">
         <div className="container-width">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="heading-lg mb-8 text-center">Business Relationally, Not Transactionally</h2>
+          <div className="max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-serif text-sage mb-6 leading-tight">
+                  Business Relationally,
+                  <span className="text-coral block">Not Transactionally</span>
+                </h2>
 
-            <div className="prose prose-lg text-sage-light mx-auto">
-              <p className="text-lg leading-relaxed mb-6">
-                Buying or selling a home is typically one of the biggest transactions you&apos;ll make
-                in your lifetime. We get that. Which is why we don&apos;t treat you like a number or
-                a commission check.
-              </p>
-              <p className="text-lg leading-relaxed mb-6">
-                With a combined 21 years in the Atlanta real estate market, we&apos;ve seen it all.
-                The dream homes that turned into nightmares. The &ldquo;fixer-uppers&rdquo; that were actually
-                money pits. The &ldquo;overpriced&rdquo; houses that were actually steals.
-              </p>
-              <p className="text-lg leading-relaxed mb-6">
-                We want to be your trusted advisor—not just for this transaction, but for all
-                the life that happens after closing. Need a plumber? We&apos;ve got one. Wondering about
-                that new development in your neighborhood? Let&apos;s chat. Want to send us your
-                remodeling before-and-after pics? Please do.
-              </p>
-            </div>
+                <div className="space-y-4 text-sage-light leading-relaxed">
+                  <p>
+                    Buying or selling a home is typically one of the biggest transactions you&apos;ll make
+                    in your lifetime. We get that. Which is why we don&apos;t treat you like a number or
+                    a commission check.
+                  </p>
+                  <p>
+                    With a combined 21 years in the Atlanta real estate market, we&apos;ve seen it all.
+                    The dream homes that turned into nightmares. The &ldquo;fixer-uppers&rdquo; that were actually
+                    money pits. The &ldquo;overpriced&rdquo; houses that were actually steals.
+                  </p>
+                  <p>
+                    We want to be your trusted advisor—not just for this transaction, but for all
+                    the life that happens after closing.
+                  </p>
+                </div>
+              </div>
 
-            <div className="grid md:grid-cols-3 gap-6 mt-12">
-              <div className="bg-cream p-6 text-center">
-                <Heart className="h-8 w-8 text-coral mx-auto mb-3" />
-                <h3 className="font-medium text-sage mb-2">We Care Long-Term</h3>
-                <p className="text-sage-light text-sm">
-                  We&apos;re here after closing. Send us holiday cards. We read them.
-                </p>
-              </div>
-              <div className="bg-cream p-6 text-center">
-                <Home className="h-8 w-8 text-coral mx-auto mb-3" />
-                <h3 className="font-medium text-sage mb-2">400+ Homes Sold</h3>
-                <p className="text-sage-light text-sm">
-                  Experience means we spot issues others miss.
-                </p>
-              </div>
-              <div className="bg-cream p-6 text-center">
-                <Clock className="h-8 w-8 text-coral mx-auto mb-3" />
-                <h3 className="font-medium text-sage mb-2">2-Hour Response</h3>
-                <p className="text-sage-light text-sm">
-                  In this market, speed matters. We deliver.
-                </p>
+              <div className="relative">
+                <div className="bg-cream p-8 md:p-10 relative">
+                  <Quote className="absolute -top-4 -left-4 w-12 h-12 text-coral/20" />
+                  <p className="text-lg md:text-xl font-serif text-sage italic leading-relaxed">
+                    &ldquo;Need a plumber? We&apos;ve got one. Wondering about that new development in your neighborhood? Let&apos;s chat. Want to send us your remodeling pics? Please do.&rdquo;
+                  </p>
+                  <div className="mt-6 flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-coral/10 flex items-center justify-center">
+                      <Heart className="w-5 h-5 text-coral" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-sage">Emily Hanley</p>
+                      <p className="text-sm text-sage-light">Founder</p>
+                    </div>
+                  </div>
+                </div>
+                {/* Decorative corner */}
+                <div className="absolute -bottom-3 -right-3 w-full h-full border-2 border-coral/20 -z-10" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className="section-padding bg-sand-light">
-        <div className="container-width">
-          <h2 className="heading-lg text-center mb-4">Meet the Team</h2>
-          <p className="body-text text-center max-w-2xl mx-auto mb-12">
-            Real people, real expertise, real commitment to finding you the right home.
-          </p>
+      {/* Stats Section */}
+      <section className="py-16 bg-sage">
+        <div className="container-width px-6 md:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <div
+                key={stat.label}
+                className="text-center"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="text-4xl md:text-5xl lg:text-6xl font-serif text-coral mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-white font-medium mb-1">{stat.label}</div>
+                <div className="text-white/60 text-sm">{stat.description}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-          <div className="space-y-16">
+      {/* Team Section */}
+      <section className="section-padding bg-cream">
+        <div className="container-width">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-sage mb-4">
+              Meet the Team
+            </h2>
+            <p className="text-lg text-sage-light max-w-2xl mx-auto">
+              Real people, real expertise, real commitment to finding you the right home.
+            </p>
+          </div>
+
+          {/* Team Member Selector - Mobile */}
+          <div className="flex justify-center gap-3 mb-12 md:hidden">
+            {teamMembers.map((member, index) => (
+              <button
+                key={member.name}
+                onClick={() => setActiveTeamMember(index)}
+                className={`w-16 h-16 rounded-full overflow-hidden border-3 transition-all duration-300 ${
+                  activeTeamMember === index
+                    ? 'border-coral scale-110 shadow-lg'
+                    : 'border-transparent opacity-60'
+                }`}
+              >
+                <div className="w-full h-full bg-sage/20 flex items-center justify-center">
+                  <span className="text-xl font-serif text-sage">{member.name[0]}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Team Cards */}
+          <div className="space-y-24">
             {teamMembers.map((member, index) => (
               <div
                 key={member.name}
-                className={`grid md:grid-cols-2 gap-12 items-start ${
+                className={`grid md:grid-cols-12 gap-8 md:gap-12 items-start ${
                   index % 2 === 1 ? 'md:flex-row-reverse' : ''
                 }`}
               >
-                <div className={index % 2 === 1 ? 'md:order-2' : ''}>
-                  <div className="bg-sage/10 aspect-square rounded-lg flex items-center justify-center">
-                    <Users className="h-24 w-24 text-sage/30" />
+                {/* Photo Column */}
+                <div className={`md:col-span-5 ${index % 2 === 1 ? 'md:order-2' : ''}`}>
+                  <div className="relative group">
+                    <div className="aspect-[4/5] bg-sage/10 overflow-hidden">
+                      <div className="w-full h-full bg-gradient-to-br from-sage/20 to-coral/10 flex items-center justify-center">
+                        <span className="text-8xl font-serif text-sage/30">{member.name[0]}</span>
+                      </div>
+                    </div>
+                    {/* Accent bar */}
+                    <div className={`absolute -bottom-3 ${index % 2 === 0 ? '-right-3' : '-left-3'} w-2/3 h-3 ${member.accent === 'coral' ? 'bg-coral' : 'bg-sage'}`} />
                   </div>
                 </div>
 
-                <div className={index % 2 === 1 ? 'md:order-1' : ''}>
-                  <h3 className="text-2xl font-serif text-sage mb-1">{member.name}</h3>
-                  <p className="text-coral mb-4">{member.role}</p>
+                {/* Content Column */}
+                <div className={`md:col-span-7 ${index % 2 === 1 ? 'md:order-1' : ''}`}>
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-3xl md:text-4xl font-serif text-sage">{member.name}</h3>
+                  </div>
+                  <p className={`text-lg font-medium mb-6 ${member.accent === 'coral' ? 'text-coral' : 'text-sage-light'}`}>
+                    {member.role}
+                  </p>
 
-                  <div className="text-sage-light whitespace-pre-line mb-6">
+                  <div className="text-sage-light whitespace-pre-line mb-8 leading-relaxed">
                     {member.bio}
                   </div>
 
-                  <div className="mb-6">
-                    <h4 className="font-medium text-sage mb-2">What I Bring to the Table</h4>
-                    <ul className="space-y-2">
+                  {/* Highlights Grid */}
+                  <div className="bg-white p-6 mb-6">
+                    <h4 className="text-sm font-medium text-sage uppercase tracking-wider mb-4">
+                      What I Bring to the Table
+                    </h4>
+                    <div className="grid sm:grid-cols-2 gap-3">
                       {member.highlights.map((highlight, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sage-light text-sm">
-                          <Star className="h-4 w-4 text-coral flex-shrink-0 mt-0.5" />
-                          {highlight}
-                        </li>
+                        <div key={i} className="flex items-start gap-3">
+                          <Star className={`h-4 w-4 flex-shrink-0 mt-1 ${member.accent === 'coral' ? 'text-coral' : 'text-sage'}`} />
+                          <span className="text-sage-light text-sm">{highlight}</span>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
 
+                  {/* Fun Facts */}
                   <div className="mb-6">
-                    <h4 className="font-medium text-sage mb-2">Fun Facts</h4>
-                    <ul className="space-y-1">
+                    <h4 className="text-sm font-medium text-sage uppercase tracking-wider mb-3">
+                      Fun Facts
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
                       {member.funFacts.map((fact, i) => (
-                        <li key={i} className="text-sage-light text-sm">• {fact}</li>
+                        <span
+                          key={i}
+                          className="inline-block bg-cream px-4 py-2 text-sage-light text-sm rounded-full"
+                        >
+                          {fact}
+                        </span>
                       ))}
-                    </ul>
+                    </div>
                   </div>
 
+                  {/* Contact Links */}
                   <div className="flex flex-wrap gap-4">
+                    {member.phone && (
+                      <a
+                        href={`tel:${member.phone}`}
+                        className="inline-flex items-center gap-2 text-sage hover:text-coral transition-colors text-sm"
+                      >
+                        <Phone className="h-4 w-4" />
+                        {member.phone}
+                      </a>
+                    )}
                     {member.email && (
                       <a
                         href={`mailto:${member.email}`}
                         className="inline-flex items-center gap-2 text-sage hover:text-coral transition-colors text-sm"
                       >
                         <Mail className="h-4 w-4" />
-                        {member.email}
+                        Email
                       </a>
                     )}
                     {member.instagram && (
@@ -210,50 +338,117 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Brokerage */}
+      {/* Values Section */}
       <section className="section-padding bg-white">
         <div className="container-width">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="heading-md mb-4">Proudly With Bolst</h2>
-            <p className="body-text mb-6">
-              Our brokerage, Bolst, is a B Corp that believes in using success in real estate
-              to give back to the community. All of our vendor partners donate to local charities
-              with every transaction, and our broker, Cathryn Childs, is a licensed attorney
-              with years of Atlanta real estate law experience.
-            </p>
-            <a
-              href="https://bolst.homes"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-coral font-medium hover:text-coral-dark transition-colors"
-            >
-              Learn more about Bolst →
-            </a>
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-serif text-sage mb-4">What We Stand For</h2>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="group">
+                <div className="bg-cream p-8 h-full transition-all duration-300 group-hover:shadow-soft group-hover:-translate-y-1">
+                  <div className="w-14 h-14 rounded-full bg-coral/10 flex items-center justify-center mb-6 group-hover:bg-coral group-hover:scale-110 transition-all duration-300">
+                    <Heart className="h-7 w-7 text-coral group-hover:text-white transition-colors duration-300" />
+                  </div>
+                  <h3 className="text-xl font-serif text-sage mb-3">We Care Long-Term</h3>
+                  <p className="text-sage-light">
+                    We&apos;re here after closing. Send us holiday cards. We actually read them.
+                    Your home journey doesn&apos;t end at the closing table.
+                  </p>
+                </div>
+              </div>
+
+              <div className="group">
+                <div className="bg-cream p-8 h-full transition-all duration-300 group-hover:shadow-soft group-hover:-translate-y-1">
+                  <div className="w-14 h-14 rounded-full bg-coral/10 flex items-center justify-center mb-6 group-hover:bg-coral group-hover:scale-110 transition-all duration-300">
+                    <Home className="h-7 w-7 text-coral group-hover:text-white transition-colors duration-300" />
+                  </div>
+                  <h3 className="text-xl font-serif text-sage mb-3">400+ Homes Sold</h3>
+                  <p className="text-sage-light">
+                    Experience means we spot issues others miss. We&apos;ve seen what goes wrong
+                    and know how to protect you from costly mistakes.
+                  </p>
+                </div>
+              </div>
+
+              <div className="group">
+                <div className="bg-cream p-8 h-full transition-all duration-300 group-hover:shadow-soft group-hover:-translate-y-1">
+                  <div className="w-14 h-14 rounded-full bg-coral/10 flex items-center justify-center mb-6 group-hover:bg-coral group-hover:scale-110 transition-all duration-300">
+                    <Clock className="h-7 w-7 text-coral group-hover:text-white transition-colors duration-300" />
+                  </div>
+                  <h3 className="text-xl font-serif text-sage mb-3">2-Hour Response</h3>
+                  <p className="text-sage-light">
+                    In this market, speed matters. We deliver. Text us anytime—we&apos;ll
+                    get back to you before your coffee gets cold.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Brokerage */}
+      <section className="section-padding bg-cream">
+        <div className="container-width">
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-white p-8 md:p-12 text-center relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-coral via-sage to-coral" />
+
+              <h2 className="text-2xl md:text-3xl font-serif text-sage mb-4">Proudly With Bolst</h2>
+              <p className="text-sage-light mb-6 leading-relaxed">
+                Our brokerage, Bolst, is a B Corp that believes in using success in real estate
+                to give back to the community. All of our vendor partners donate to local charities
+                with every transaction, and our broker, Cathryn Childs, is a licensed attorney
+                with years of Atlanta real estate law experience.
+              </p>
+              <a
+                href="https://bolst.homes"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-coral font-medium hover:text-coral-dark transition-colors"
+              >
+                Learn more about Bolst
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="section-padding bg-sage">
-        <div className="container-width text-center">
-          <h2 className="text-3xl font-serif text-white mb-4">Ready to Chat?</h2>
-          <p className="text-white/70 max-w-xl mx-auto mb-8">
-            No pressure, no sales pitch. Just real talk about what you&apos;re looking for.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="sms:6787079385"
-              className="btn-primary inline-flex items-center gap-2"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Text Emily
-            </a>
-            <Link
-              href="/contact"
-              className="bg-white text-sage px-6 py-3 font-medium tracking-wide hover:bg-cream transition-colors"
-            >
-              Schedule a Consultation
-            </Link>
+      <section className="relative section-padding bg-sage overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-coral blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-white blur-3xl" />
+        </div>
+
+        <div className="container-width relative z-10">
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-white mb-6">
+              Ready to Chat?
+            </h2>
+            <p className="text-xl text-white/70 mb-10">
+              No pressure, no sales pitch. Just real talk about what you&apos;re looking for.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <a
+                href="sms:6787079385"
+                className="btn-primary inline-flex items-center justify-center gap-2"
+              >
+                <MessageCircle className="h-4 w-4" />
+                Text Emily
+              </a>
+              <Link
+                href="/contact"
+                className="bg-white text-sage px-8 py-4 font-medium tracking-wider text-sm uppercase hover:bg-cream transition-all duration-300 inline-flex items-center justify-center"
+              >
+                Schedule a Consultation
+              </Link>
+            </div>
           </div>
         </div>
       </section>
