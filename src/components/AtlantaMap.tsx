@@ -1,8 +1,9 @@
 'use client'
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import { Icon, divIcon } from 'leaflet'
+import { divIcon } from 'leaflet'
 import { useState } from 'react'
+import Image from 'next/image'
 import 'leaflet/dist/leaflet.css'
 
 // Atlanta center coordinates
@@ -17,6 +18,7 @@ interface Place {
   neighborhood: string
   description: string
   website?: string
+  image: string
 }
 
 const PLACES: Place[] = [
@@ -27,7 +29,8 @@ const PLACES: Place[] = [
     category: 'restaurant',
     neighborhood: "Old Fourth Ward",
     description: "James Beard Award-winning restaurant with seasonal American cuisine. One of Atlanta's best.",
-    website: "https://staplehouse.com"
+    website: "https://staplehouse.com",
+    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=300&fit=crop"
   },
   {
     name: "Miller Union",
@@ -35,7 +38,8 @@ const PLACES: Place[] = [
     category: 'restaurant',
     neighborhood: "West Midtown",
     description: "Farm-to-table Southern cuisine in a converted warehouse. Perfect for a special night out.",
-    website: "https://millerunion.com"
+    website: "https://millerunion.com",
+    image: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=400&h=300&fit=crop"
   },
   {
     name: "The Optimist",
@@ -43,7 +47,8 @@ const PLACES: Place[] = [
     category: 'restaurant',
     neighborhood: "West Midtown",
     description: "Upscale seafood in a nautical-inspired space. The lobster rolls are incredible.",
-    website: "https://theoptimistrestaurant.com"
+    website: "https://theoptimistrestaurant.com",
+    image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400&h=300&fit=crop"
   },
   {
     name: "Fox Bros Bar-B-Q",
@@ -51,7 +56,8 @@ const PLACES: Place[] = [
     category: 'restaurant',
     neighborhood: "Little Five Points",
     description: "Texas-style BBQ that's become an Atlanta institution. Get the brisket.",
-    website: "https://foxbrosbbq.com"
+    website: "https://foxbrosbbq.com",
+    image: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=400&h=300&fit=crop"
   },
   {
     name: "Bacchanalia",
@@ -59,7 +65,8 @@ const PLACES: Place[] = [
     category: 'restaurant',
     neighborhood: "West Midtown",
     description: "Elegant prix-fixe American cuisine. Atlanta's finest dining experience.",
-    website: "https://starprovisions.com/bacchanalia"
+    website: "https://starprovisions.com/bacchanalia",
+    image: "https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=400&h=300&fit=crop"
   },
   {
     name: "Lazy Betty",
@@ -67,7 +74,8 @@ const PLACES: Place[] = [
     category: 'restaurant',
     neighborhood: "Edgewood",
     description: "Modern tasting menu in a relaxed atmosphere. Creative and surprising dishes.",
-    website: "https://lazybettyatl.com"
+    website: "https://lazybettyatl.com",
+    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop"
   },
   {
     name: "Cooks & Soldiers",
@@ -75,7 +83,8 @@ const PLACES: Place[] = [
     category: 'restaurant',
     neighborhood: "West Midtown",
     description: "Spanish Basque cuisine with amazing pintxos. Great for groups.",
-    website: "https://cooksandsoldiers.com"
+    website: "https://cooksandsoldiers.com",
+    image: "https://images.unsplash.com/photo-1515443961218-a51367888e4b?w=400&h=300&fit=crop"
   },
   {
     name: "Gunshow",
@@ -83,7 +92,8 @@ const PLACES: Place[] = [
     category: 'restaurant',
     neighborhood: "Glenwood Park",
     description: "Dim sum-style service where chefs bring dishes to your table. Unique experience.",
-    website: "https://gunshowatl.com"
+    website: "https://gunshowatl.com",
+    image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400&h=300&fit=crop"
   },
   // Coffee Shops
   {
@@ -92,7 +102,8 @@ const PLACES: Place[] = [
     category: 'coffee',
     neighborhood: "Old Fourth Ward",
     description: "Specialty coffee with a sleek, modern vibe. Their cold brew is perfect.",
-    website: "https://revelatorcoffee.com"
+    website: "https://revelatorcoffee.com",
+    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=300&fit=crop"
   },
   {
     name: "Spiller Park Coffee",
@@ -100,7 +111,8 @@ const PLACES: Place[] = [
     category: 'coffee',
     neighborhood: "Ponce City Market",
     description: "Local favorite inside Ponce City Market. Great espresso drinks.",
-    website: "https://spillerpark.com"
+    website: "https://spillerpark.com",
+    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=300&fit=crop"
   },
   {
     name: "Chrome Yellow Trading Co.",
@@ -108,6 +120,7 @@ const PLACES: Place[] = [
     category: 'coffee',
     neighborhood: "Inman Park",
     description: "Cozy cafe with excellent pastries and coffee. A neighborhood gem.",
+    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&h=300&fit=crop"
   },
   {
     name: "Octane Coffee",
@@ -115,7 +128,8 @@ const PLACES: Place[] = [
     category: 'coffee',
     neighborhood: "Virginia-Highland",
     description: "Atlanta coffee pioneer. Industrial space with serious coffee credentials.",
-    website: "https://octanecoffee.com"
+    website: "https://octanecoffee.com",
+    image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400&h=300&fit=crop"
   },
   {
     name: "Dancing Goats Coffee",
@@ -123,7 +137,8 @@ const PLACES: Place[] = [
     category: 'coffee',
     neighborhood: "Midtown",
     description: "Batdorf & Bronson's Atlanta outpost. Consistently great coffee.",
-    website: "https://dancinggoats.com"
+    website: "https://dancinggoats.com",
+    image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop"
   },
   // Shops
   {
@@ -132,7 +147,8 @@ const PLACES: Place[] = [
     category: 'shop',
     neighborhood: "Ponce City Market",
     description: "Curated collection of local makers. Perfect for unique Atlanta gifts.",
-    website: "https://citizensupplyatl.com"
+    website: "https://citizensupplyatl.com",
+    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=300&fit=crop"
   },
   {
     name: "Paris on Ponce",
@@ -140,7 +156,8 @@ const PLACES: Place[] = [
     category: 'shop',
     neighborhood: "Poncey-Highland",
     description: "Eclectic antique mall with vintage finds and unique decor pieces.",
-    website: "https://parisonponce.com"
+    website: "https://parisonponce.com",
+    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop"
   },
   {
     name: "The Merchant",
@@ -148,6 +165,7 @@ const PLACES: Place[] = [
     category: 'shop',
     neighborhood: "Castleberry Hill",
     description: "Beautifully curated home goods and lifestyle shop.",
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop"
   },
   {
     name: "Worthmore Jewelers",
@@ -155,7 +173,8 @@ const PLACES: Place[] = [
     category: 'shop',
     neighborhood: "Old Fourth Ward",
     description: "Custom jewelry and beautiful engagement rings. Local family business.",
-    website: "https://worthmorejewelers.com"
+    website: "https://worthmorejewelers.com",
+    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=300&fit=crop"
   },
   // Bars
   {
@@ -164,7 +183,8 @@ const PLACES: Place[] = [
     category: 'bar',
     neighborhood: "Krog Street Market",
     description: "Sophisticated cocktail bar with a vintage vibe. Excellent drinks.",
-    website: "https://ticonderogaclub.com"
+    website: "https://ticonderogaclub.com",
+    image: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&h=300&fit=crop"
   },
   {
     name: "Victory Sandwich Bar",
@@ -172,7 +192,8 @@ const PLACES: Place[] = [
     category: 'bar',
     neighborhood: "Inman Park",
     description: "Dive bar meets great sandwiches. Casual and fun.",
-    website: "https://vfranchise.com"
+    website: "https://vfranchise.com",
+    image: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=400&h=300&fit=crop"
   },
   {
     name: "Brick Store Pub",
@@ -180,7 +201,8 @@ const PLACES: Place[] = [
     category: 'bar',
     neighborhood: "Decatur",
     description: "World-class beer selection in a cozy pub setting. Over 20 years strong.",
-    website: "https://brickstorepub.com"
+    website: "https://brickstorepub.com",
+    image: "https://images.unsplash.com/photo-1546171753-97d7676e4602?w=400&h=300&fit=crop"
   },
   {
     name: "Sister Louisa's Church",
@@ -188,6 +210,7 @@ const PLACES: Place[] = [
     category: 'bar',
     neighborhood: "Edgewood",
     description: "Quirky church-themed bar with live organ music. Truly unique Atlanta experience.",
+    image: "https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=400&h=300&fit=crop"
   },
   // Kid-Friendly
   {
@@ -196,7 +219,8 @@ const PLACES: Place[] = [
     category: 'kids',
     neighborhood: "Druid Hills",
     description: "Natural history museum with dinosaurs and nature trails. Kids love it.",
-    website: "https://fernbankmuseum.org"
+    website: "https://fernbankmuseum.org",
+    image: "https://images.unsplash.com/photo-1519222970733-f546218fa6d7?w=400&h=300&fit=crop"
   },
   {
     name: "Center for Puppetry Arts",
@@ -204,7 +228,8 @@ const PLACES: Place[] = [
     category: 'kids',
     neighborhood: "Midtown",
     description: "World-renowned puppetry museum and theater. Jim Henson collection is amazing.",
-    website: "https://puppet.org"
+    website: "https://puppet.org",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop"
   },
   {
     name: "Piedmont Park",
@@ -212,7 +237,8 @@ const PLACES: Place[] = [
     category: 'kids',
     neighborhood: "Midtown",
     description: "Atlanta's beloved urban park. Great playgrounds and green space.",
-    website: "https://piedmontpark.org"
+    website: "https://piedmontpark.org",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop"
   },
   {
     name: "Legoland Discovery Center",
@@ -220,7 +246,8 @@ const PLACES: Place[] = [
     category: 'kids',
     neighborhood: "Phipps Plaza",
     description: "Indoor Lego playground and rides. Perfect for rainy days.",
-    website: "https://legolanddiscoverycenter.com"
+    website: "https://legolanddiscoverycenter.com",
+    image: "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=400&h=300&fit=crop"
   },
 ]
 
@@ -312,27 +339,46 @@ export function AtlantaMap() {
                 icon={createCustomIcon(config.emoji, config.color)}
               >
                 <Popup>
-                  <div className="min-w-[200px] p-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-lg">{config.emoji}</span>
-                      <h3 className="font-serif text-lg text-sage font-medium">{place.name}</h3>
+                  <div className="w-[280px]">
+                    {/* Image */}
+                    <div className="relative w-full h-[140px] -mx-[20px] -mt-[13px] mb-3" style={{ width: 'calc(100% + 40px)' }}>
+                      <Image
+                        src={place.image}
+                        alt={place.name}
+                        fill
+                        className="object-cover"
+                        sizes="280px"
+                      />
+                      <div className="absolute bottom-2 left-2">
+                        <span className="inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm px-2 py-1 text-xs font-medium text-sage rounded">
+                          {config.emoji} {config.label.replace('s', '')}
+                        </span>
+                      </div>
                     </div>
-                    <p className="text-xs text-coral font-medium uppercase tracking-wide mb-2">
-                      {place.neighborhood}
-                    </p>
-                    <p className="text-sm text-sage-light leading-relaxed mb-3">
-                      {place.description}
-                    </p>
-                    {place.website && (
-                      <a
-                        href={place.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-coral hover:text-coral-dark font-medium"
-                      >
-                        Visit Website →
-                      </a>
-                    )}
+
+                    {/* Content */}
+                    <div className="px-1">
+                      <h3 className="font-serif text-lg text-sage font-medium mb-1">{place.name}</h3>
+                      <p className="text-xs text-coral font-medium uppercase tracking-wide mb-2">
+                        {place.neighborhood}
+                      </p>
+                      <p className="text-sm text-sage-light leading-relaxed mb-3">
+                        {place.description}
+                      </p>
+                      {place.website && (
+                        <a
+                          href={place.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-sm text-coral hover:text-coral-dark font-medium transition-colors"
+                        >
+                          Visit Website
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </Popup>
               </Marker>
@@ -343,7 +389,7 @@ export function AtlantaMap() {
 
       {/* Legend */}
       <div className="mt-4 text-center text-sm text-sage-light">
-        Showing {filteredPlaces.length} of Emily's favorite spots in Metro Atlanta
+        Showing {filteredPlaces.length} of Emily&apos;s favorite spots in Metro Atlanta
       </div>
     </div>
   )
