@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import { MapPin, Coffee, Utensils, Star, MessageCircle, Home, DollarSign, Users, ChevronDown, Sparkles, Quote, ArrowRight } from 'lucide-react'
 
 // Dynamic import for the map component (Leaflet requires window)
@@ -29,6 +30,7 @@ const neighborhoods = [
     schools: 'Morningside Elementary, Inman Middle',
     emilysTake: 'If you want to walk to brunch and never drive on weekends, this is your spot. Competitive market though—move fast.',
     highlight: 'Walk everywhere',
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=500&fit=crop',
     spots: [
       { name: 'Atkins Park Tavern', type: 'restaurant' },
       { name: 'Dark Horse Coffee', type: 'coffee' },
@@ -44,6 +46,7 @@ const neighborhoods = [
     schools: 'City Schools of Decatur (highly rated)',
     emilysTake: 'The schools here are a big draw. Great restaurants, walkable downtown, and a real community feel. Expect competition for the best streets.',
     highlight: 'Top schools',
+    image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&h=500&fit=crop',
     spots: [
       { name: 'Leon\'s Full Service', type: 'restaurant' },
       { name: 'Victory Sandwich Bar', type: 'restaurant' },
@@ -59,6 +62,7 @@ const neighborhoods = [
     schools: 'Hope-Hill Elementary, MLK Jr Middle',
     emilysTake: 'Beautiful Victorian homes and the park is amazing for families. The farmers market on Sundays is a must. Getting pricier but still relative value.',
     highlight: 'Historic charm',
+    image: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&h=500&fit=crop',
     spots: [
       { name: 'Ria\'s Bluebird', type: 'restaurant' },
       { name: 'Grant Park Coffeehouse', type: 'coffee' },
@@ -74,6 +78,7 @@ const neighborhoods = [
     schools: 'Walton High School, Wheeler High School',
     emilysTake: 'I grew up here! Great schools, more space for your money, and safe neighborhoods. Trade-off is the commute into the city.',
     highlight: 'More space',
+    image: 'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=800&h=500&fit=crop',
     spots: [
       { name: 'Canoe Restaurant', type: 'restaurant' },
       { name: 'Marietta Square', type: 'activity' },
@@ -89,6 +94,7 @@ const neighborhoods = [
     schools: 'Toomer Elementary (Dekalb County)',
     emilysTake: 'One of my favorite neighborhoods for character and value. Great neighbors, porches, and block parties. Still has that real neighborhood feel.',
     highlight: 'Best value',
+    image: 'https://images.unsplash.com/photo-1598228723793-52759bba239c?w=800&h=500&fit=crop',
     spots: [
       { name: 'Le Petit Marché', type: 'restaurant' },
       { name: 'Pullman Yard', type: 'activity' },
@@ -104,6 +110,7 @@ const neighborhoods = [
     schools: 'Atlanta Public Schools + private options',
     emilysTake: 'If you want walkable luxury with great restaurants and shopping, Buckhead delivers. Lots of condo options. HOA fees can be steep.',
     highlight: 'Luxury living',
+    image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&h=500&fit=crop',
     spots: [
       { name: 'Aria', type: 'restaurant' },
       { name: 'Lenox Square', type: 'activity' },
@@ -119,6 +126,7 @@ const neighborhoods = [
     schools: 'Atlanta Public Schools',
     emilysTake: 'The restaurant scene here is incredible and it\'s booming with new development. Great for singles and couples. Lots of loft conversions.',
     highlight: 'Food scene',
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=500&fit=crop',
     spots: [
       { name: 'The Optimist', type: 'restaurant' },
       { name: 'Westside Provisions', type: 'activity' },
@@ -134,6 +142,7 @@ const neighborhoods = [
     schools: 'Roswell High School (Fulton County)',
     emilysTake: 'Historic Canton Street is charming with great local shops. Good value compared to ITP, and the Chattahoochee River is right there for kayaking.',
     highlight: 'Outdoors',
+    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=500&fit=crop',
     spots: [
       { name: 'The Fickle Pickle', type: 'restaurant' },
       { name: 'Vickery Village', type: 'activity' },
@@ -175,8 +184,24 @@ function NeighborhoodCard({ neighborhood, isExpanded, onToggle, index }: {
       </button>
 
       {/* Expandable Content */}
-      <div className={`overflow-hidden transition-all duration-500 ease-out ${isExpanded ? 'max-h-[700px] opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="px-5 pb-5 space-y-4">
+      <div className={`overflow-hidden transition-all duration-500 ease-out ${isExpanded ? 'max-h-[900px] opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className="pb-5 space-y-4">
+          {/* Neighborhood Image */}
+          <div className="relative w-full h-[180px]">
+            <Image
+              src={neighborhood.image}
+              alt={neighborhood.name}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 400px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-sage/60 to-transparent" />
+            <div className="absolute bottom-3 left-4">
+              <span className="text-white font-serif text-xl">{neighborhood.name}</span>
+            </div>
+          </div>
+
+          <div className="px-5 space-y-4">
           {/* Emily's Take - Featured prominently */}
           <div className="bg-sage p-5 relative overflow-hidden">
             <Quote className="absolute top-3 right-3 w-8 h-8 text-white/10" />
@@ -237,6 +262,7 @@ function NeighborhoodCard({ neighborhood, isExpanded, onToggle, index }: {
             <MessageCircle className="h-4 w-4" />
             Ask About {neighborhood.name}
           </a>
+          </div>
         </div>
       </div>
     </div>
@@ -355,14 +381,29 @@ export default function NeighborhoodsPage() {
 
             {/* Neighborhood Detail */}
             <div className="lg:col-span-2">
-              <div className="bg-white p-8 md:p-10 shadow-soft">
-                <div className="flex items-center gap-3 mb-2 flex-wrap">
-                  <h2 className="text-3xl md:text-4xl font-serif text-sage">{selectedNeighborhood.name}</h2>
-                  <span className="inline-flex items-center px-3 py-1 text-sm font-medium bg-coral/10 text-coral">
-                    {selectedNeighborhood.highlight}
-                  </span>
+              <div className="bg-white shadow-soft overflow-hidden">
+                {/* Neighborhood Image Header */}
+                <div className="relative w-full h-[280px]">
+                  <Image
+                    src={selectedNeighborhood.image}
+                    alt={selectedNeighborhood.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 66vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-sage/80 via-sage/20 to-transparent" />
+                  <div className="absolute bottom-6 left-8 right-8">
+                    <div className="flex items-center gap-3 mb-2 flex-wrap">
+                      <h2 className="text-3xl md:text-4xl font-serif text-white">{selectedNeighborhood.name}</h2>
+                      <span className="inline-flex items-center px-3 py-1 text-sm font-medium bg-white/20 backdrop-blur-sm text-white">
+                        {selectedNeighborhood.highlight}
+                      </span>
+                    </div>
+                    <p className="text-white/90 text-lg">{selectedNeighborhood.vibe}</p>
+                  </div>
                 </div>
-                <p className="text-coral mb-8 text-lg">{selectedNeighborhood.vibe}</p>
+
+                <div className="p-8 md:p-10">
 
                 <div className="grid md:grid-cols-2 gap-6 mb-8">
                   <div className="flex items-start gap-4 bg-cream p-5">
@@ -426,6 +467,7 @@ export default function NeighborhoodsPage() {
                   <MessageCircle className="h-4 w-4" />
                   Ask About {selectedNeighborhood.name}
                 </a>
+                </div>
               </div>
             </div>
           </div>
