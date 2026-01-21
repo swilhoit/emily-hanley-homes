@@ -1,0 +1,363 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply antialiased text-sage;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  /* Selection styling */
+  ::selection {
+    @apply bg-coral/20 text-sage;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-cream;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-sand-dark rounded-full;
+    transition: background 0.2s;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-sage-muted;
+  }
+}
+
+@layer components {
+  /* Button Styles */
+  .btn-primary {
+    @apply relative bg-coral text-white px-8 py-4 font-medium tracking-wider text-sm uppercase
+           overflow-hidden transition-all duration-300
+           hover:bg-coral-dark hover:shadow-glow
+           focus:outline-none focus:ring-2 focus:ring-coral/50 focus:ring-offset-2;
+  }
+
+  .btn-primary::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0
+           -translate-x-full transition-transform duration-700;
+  }
+
+  .btn-primary:hover::before {
+    @apply translate-x-full;
+  }
+
+  .btn-secondary {
+    @apply bg-sage text-white px-8 py-4 font-medium tracking-wider text-sm uppercase
+           transition-all duration-300
+           hover:bg-sage-dark
+           focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2;
+  }
+
+  .btn-outline {
+    @apply relative border-2 border-white/30 text-white px-8 py-4 font-medium
+           tracking-wider text-sm uppercase bg-transparent
+           transition-all duration-300
+           hover:bg-white/10 hover:border-white/60
+           focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2;
+  }
+
+  .btn-outline-dark {
+    @apply relative border-2 border-sage/30 text-sage px-8 py-4 font-medium
+           tracking-wider text-sm uppercase bg-transparent
+           transition-all duration-300
+           hover:bg-sage hover:text-white hover:border-sage
+           focus:outline-none focus:ring-2 focus:ring-sage/30 focus:ring-offset-2;
+  }
+
+  /* Section & Container */
+  .section-padding {
+    @apply py-20 md:py-28 lg:py-32 px-6 md:px-8;
+  }
+
+  .section-padding-sm {
+    @apply py-12 md:py-16 px-6 md:px-8;
+  }
+
+  .container-width {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .container-narrow {
+    @apply max-w-4xl mx-auto;
+  }
+
+  /* Typography */
+  .heading-display {
+    @apply text-4xl md:text-5xl lg:text-display font-serif text-sage font-light tracking-tight;
+  }
+
+  .heading-xl {
+    @apply text-3xl md:text-4xl lg:text-5xl font-serif text-sage font-light;
+  }
+
+  .heading-lg {
+    @apply text-2xl md:text-3xl lg:text-4xl font-serif text-sage font-light;
+  }
+
+  .heading-md {
+    @apply text-xl md:text-2xl font-serif text-sage font-normal;
+  }
+
+  .body-text {
+    @apply text-sage-light leading-relaxed;
+  }
+
+  .body-large {
+    @apply text-lg md:text-xl text-sage-light leading-relaxed font-light;
+  }
+
+  /* Decorative Elements */
+  .accent-line {
+    @apply w-16 h-0.5 bg-coral;
+  }
+
+  .accent-line-center {
+    @apply w-16 h-0.5 bg-coral mx-auto;
+  }
+
+  .accent-dot {
+    @apply w-2 h-2 bg-coral rounded-full;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply bg-white shadow-soft transition-all duration-500;
+  }
+
+  .card:hover {
+    @apply shadow-soft-lg -translate-y-1;
+  }
+
+  .card-elevated {
+    @apply bg-white shadow-soft-lg;
+  }
+
+  /* Glass Effect */
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-sage/80 backdrop-blur-md border border-white/10;
+  }
+
+  /* Gradient Overlays */
+  .gradient-fade-down {
+    @apply bg-gradient-to-b from-sage/90 via-sage/60 to-transparent;
+  }
+
+  .gradient-fade-up {
+    @apply bg-gradient-to-t from-sage/90 via-sage/60 to-transparent;
+  }
+
+  /* Image Treatments */
+  .image-reveal {
+    @apply overflow-hidden;
+  }
+
+  .image-reveal img {
+    @apply transition-transform duration-700 ease-smooth;
+  }
+
+  .image-reveal:hover img {
+    @apply scale-105;
+  }
+
+  /* Link Styles */
+  .link-underline {
+    @apply relative inline-block text-coral;
+  }
+
+  .link-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-px bg-coral
+           origin-left scale-x-0 transition-transform duration-300;
+  }
+
+  .link-underline:hover::after {
+    @apply scale-x-100;
+  }
+
+  /* Text Gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-coral to-coral-dark;
+  }
+
+  /* Mega Menu */
+  .mega-menu {
+    @apply absolute top-full left-0 right-0 bg-white shadow-soft-lg
+           opacity-0 invisible translate-y-2
+           transition-all duration-300 ease-smooth;
+  }
+
+  .mega-menu-trigger:hover .mega-menu,
+  .mega-menu:hover {
+    @apply opacity-100 visible translate-y-0;
+  }
+
+  /* Feature Grid Item */
+  .feature-item {
+    @apply p-8 bg-white transition-all duration-500 cursor-pointer;
+  }
+
+  .feature-item:hover {
+    @apply bg-cream shadow-soft;
+  }
+
+  .feature-item .icon-wrapper {
+    @apply w-14 h-14 rounded-full bg-coral/10 flex items-center justify-center
+           transition-all duration-300;
+  }
+
+  .feature-item:hover .icon-wrapper {
+    @apply bg-coral scale-110;
+  }
+
+  .feature-item .icon-wrapper svg {
+    @apply text-coral transition-colors duration-300;
+  }
+
+  .feature-item:hover .icon-wrapper svg {
+    @apply text-white;
+  }
+
+  /* Stats */
+  .stat-item {
+    @apply text-center;
+  }
+
+  .stat-value {
+    @apply text-4xl md:text-5xl lg:text-6xl font-serif text-coral font-light;
+  }
+
+  .stat-label {
+    @apply text-sm tracking-wider uppercase text-white/70 mt-2;
+  }
+
+  /* Testimonial */
+  .testimonial-card {
+    @apply relative p-8 md:p-10 bg-cream;
+  }
+
+  .testimonial-card::before {
+    content: '"';
+    @apply absolute top-4 left-6 text-8xl font-serif text-coral/20 leading-none;
+  }
+
+  /* Team Member */
+  .team-member {
+    @apply text-center;
+  }
+
+  .team-member .image-wrapper {
+    @apply relative overflow-hidden aspect-[3/4] mb-6;
+  }
+
+  .team-member .image-wrapper::after {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-t from-sage/40 to-transparent
+           opacity-0 transition-opacity duration-500;
+  }
+
+  .team-member:hover .image-wrapper::after {
+    @apply opacity-100;
+  }
+
+  /* Scroll Reveal Animation Classes */
+  .reveal-on-scroll {
+    @apply opacity-0 translate-y-8;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .reveal-on-scroll.revealed {
+    @apply opacity-100 translate-y-0;
+  }
+
+  /* Stagger Children Animation */
+  .stagger-children > * {
+    @apply opacity-0;
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+  .stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+  .stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+  .stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+  .stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+  .stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+}
+
+/* Floating SMS Button Animation */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+}
+
+.sms-pulse::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: rgba(212, 150, 125, 0.4);
+  animation: pulse-ring 2.5s ease-in-out infinite;
+}
+
+/* Custom cursor for interactive elements */
+@media (hover: hover) {
+  .cursor-pointer-custom {
+    cursor: pointer;
+  }
+}
+
+/* Decorative pattern background */
+.pattern-dots {
+  background-image: radial-gradient(circle, #D4967D 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.pattern-lines {
+  background-image: linear-gradient(90deg, #D4967D 1px, transparent 1px);
+  background-size: 40px 100%;
+}
+
+/* Smooth image loading - Note: Don't use img[loading] as it conflicts with Next.js Image lazy loading */
+img {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Hide scrollbar for horizontal scroll elements */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
