@@ -149,8 +149,6 @@ export function Header() {
                               <Link
                                 key={item.name}
                                 href={item.href}
-                                target={item.external ? '_blank' : undefined}
-                                rel={item.external ? 'noopener noreferrer' : undefined}
                                 className="group flex items-start gap-4 p-3 -mx-3 rounded-lg hover:bg-cream transition-all duration-300"
                               >
                                 <div className="w-10 h-10 rounded-lg bg-coral/10 flex items-center justify-center flex-shrink-0 group-hover:bg-coral group-hover:scale-105 transition-all duration-300">

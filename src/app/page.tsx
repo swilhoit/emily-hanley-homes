@@ -359,25 +359,13 @@ export default function HomePage() {
                 <p className="text-sage-light text-sm mb-6 leading-relaxed">
                   {feature.description}
                 </p>
-                {feature.external ? (
-                  <a
-                    href={feature.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-coral font-medium text-sm group-hover:gap-3 transition-all duration-300"
-                  >
-                    {feature.cta}
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                ) : (
-                  <Link
-                    href={feature.href}
-                    className="inline-flex items-center gap-2 text-coral font-medium text-sm group-hover:gap-3 transition-all duration-300"
-                  >
-                    {feature.cta}
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                )}
+                <Link
+                  href={feature.href}
+                  className="inline-flex items-center gap-2 text-coral font-medium text-sm group-hover:gap-3 transition-all duration-300"
+                >
+                  {feature.cta}
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
             ))}
           </div>
