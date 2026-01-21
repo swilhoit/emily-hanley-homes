@@ -1,7 +1,23 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import { MapPin, Coffee, Utensils, Star, MessageCircle, Home, DollarSign, Users, ChevronDown, Sparkles, Quote, ArrowRight } from 'lucide-react'
+
+// Dynamic import for the map component (Leaflet requires window)
+const AtlantaMap = dynamic(() => import('@/components/AtlantaMap').then(mod => mod.AtlantaMap), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[500px] md:h-[600px] rounded-lg bg-cream flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-12 h-12 rounded-full bg-coral/20 flex items-center justify-center mx-auto mb-3 animate-pulse">
+          <MapPin className="w-6 h-6 text-coral" />
+        </div>
+        <p className="text-sage-light">Loading map...</p>
+      </div>
+    </div>
+  ),
+})
 
 const neighborhoods = [
   {
@@ -417,27 +433,19 @@ export default function NeighborhoodsPage() {
       </section>
 
       {/* Map Section */}
-      <section className="section-padding bg-white hidden md:block">
+      <section className="section-padding bg-white">
         <div className="container-width px-6 md:px-8">
           <div className="text-center mb-8">
             <span className="inline-block bg-coral/10 text-coral px-4 py-2 text-sm font-medium tracking-wide uppercase mb-6">
-              Coming Soon
+              Interactive Guide
             </span>
             <h2 className="text-3xl md:text-4xl font-serif text-sage mb-4">Emily&apos;s Atlanta Map</h2>
             <p className="text-sage-light max-w-2xl mx-auto">
               My favorite coffee shops, restaurants, kid spots, and hidden gems across Metro Atlanta.
+              Click on any marker to learn more!
             </p>
           </div>
-          <div className="bg-cream h-96 flex items-center justify-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-sage/10 to-coral/5" />
-            <div className="text-center relative z-10">
-              <div className="w-20 h-20 rounded-full bg-sage/10 flex items-center justify-center mx-auto mb-4">
-                <MapPin className="h-10 w-10 text-sage/40" />
-              </div>
-              <p className="text-sage-light font-medium mb-2">Interactive Google Map Coming Soon</p>
-              <p className="text-sage-light text-sm">For now, text me for personalized neighborhood recommendations!</p>
-            </div>
-          </div>
+          <AtlantaMap />
         </div>
       </section>
 
