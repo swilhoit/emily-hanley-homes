@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { MapPin, Coffee, Utensils, Star, MessageCircle, Home, DollarSign, Users, ChevronDown, Sparkles, Quote, ArrowRight } from 'lucide-react'
@@ -166,26 +166,10 @@ function NeighborhoodCard({ neighborhood, isExpanded, onToggle, index }: {
   onToggle: () => void
   index: number
 }) {
-  const [showContent, setShowContent] = useState(false)
-
-  useEffect(() => {
-    if (isExpanded) {
-      const timer = setTimeout(() => setShowContent(true), 100)
-      return () => clearTimeout(timer)
-    } else {
-      setShowContent(false)
-    }
-  }, [isExpanded])
-
   return (
     <div
-      className={`bg-white overflow-hidden transition-all duration-500 ease-out ${
-        isExpanded ? 'shadow-soft-lg' : 'hover:shadow-soft'
-      }`}
-      style={{
-        animationDelay: `${index * 50}ms`,
-        transform: isExpanded ? 'scale(1.01)' : 'scale(1)'
-      }}
+      className="bg-white overflow-hidden transition-all duration-300 hover:shadow-soft"
+      style={{ animationDelay: `${index * 50}ms` }}
     >
       {/* Card Header - Always Visible */}
       <button
@@ -194,127 +178,98 @@ function NeighborhoodCard({ neighborhood, isExpanded, onToggle, index }: {
       >
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
-            <h3 className={`text-xl font-serif transition-colors duration-300 ${
-              isExpanded ? 'text-coral' : 'text-sage group-hover:text-coral'
-            }`}>{neighborhood.name}</h3>
-            <span className={`inline-flex items-center px-2.5 py-1 text-xs font-medium whitespace-nowrap transition-all duration-300 ${
-              isExpanded ? 'bg-coral text-white' : 'bg-coral/10 text-coral'
-            }`}>
+            <h3 className="text-xl font-serif text-sage group-hover:text-coral transition-colors">{neighborhood.name}</h3>
+            <span className="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-coral/10 text-coral whitespace-nowrap">
               {neighborhood.highlight}
             </span>
           </div>
           <p className="text-sm text-sage-light mb-2">{neighborhood.vibe}</p>
           <p className="text-coral font-medium">{neighborhood.priceRange}</p>
         </div>
-        <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 ease-out ${
-          isExpanded ? 'rotate-180 bg-coral scale-110' : 'bg-cream group-hover:bg-coral'
-        }`}>
-          <ChevronDown className={`w-5 h-5 transition-colors duration-300 ${
-            isExpanded ? 'text-white' : 'text-sage group-hover:text-white'
-          }`} />
+        <div className={`flex-shrink-0 w-10 h-10 rounded-full bg-cream flex items-center justify-center transition-all duration-300 group-hover:bg-coral ${isExpanded ? 'rotate-180 bg-coral' : ''}`}>
+          <ChevronDown className={`w-5 h-5 transition-colors ${isExpanded ? 'text-white' : 'text-sage group-hover:text-white'}`} />
         </div>
       </button>
 
       {/* Expandable Content */}
-      <div
-        className={`grid transition-all duration-500 ease-out ${
-          isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-        }`}
-      >
-        <div className="overflow-hidden">
-          <div className="pb-5 space-y-4">
-            {/* Neighborhood Image */}
-            <div className="relative w-full h-[180px] overflow-hidden">
-              <Image
-                src={neighborhood.image}
-                alt={neighborhood.name}
-                fill
-                className={`object-cover transition-all duration-700 ease-out ${
-                  showContent ? 'scale-100 opacity-100' : 'scale-110 opacity-0'
-                }`}
-                sizes="(max-width: 768px) 100vw, 400px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-sage/60 to-transparent" />
-              <div className={`absolute bottom-3 left-4 transition-all duration-500 delay-100 ${
-                showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}>
-                <span className="text-white font-serif text-xl">{neighborhood.name}</span>
+      <div className={`overflow-hidden transition-all duration-500 ease-out ${isExpanded ? 'max-h-[900px] opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className="pb-5 space-y-4">
+          {/* Neighborhood Image */}
+          <div className="relative w-full h-[180px]">
+            <Image
+              src={neighborhood.image}
+              alt={neighborhood.name}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 400px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-sage/60 to-transparent" />
+            <div className="absolute bottom-3 left-4">
+              <span className="text-white font-serif text-xl">{neighborhood.name}</span>
+            </div>
+          </div>
+
+          <div className="px-5 space-y-4">
+          {/* Emily's Take - Featured prominently */}
+          <div className="bg-sage p-5 relative overflow-hidden">
+            <Quote className="absolute top-3 right-3 w-8 h-8 text-white/10" />
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="w-4 h-4 text-coral" />
+              <span className="text-sm font-medium text-white">Emily&apos;s Take</span>
+            </div>
+            <p className="text-white/80 text-sm leading-relaxed relative z-10">
+              &ldquo;{neighborhood.emilysTake}&rdquo;
+            </p>
+          </div>
+
+          {/* Quick Facts */}
+          <div className="grid grid-cols-1 gap-3">
+            <div className="flex items-start gap-3 bg-cream p-4">
+              <div className="w-10 h-10 rounded-full bg-coral/10 flex items-center justify-center flex-shrink-0">
+                <Users className="h-5 w-5 text-coral" />
+              </div>
+              <div>
+                <div className="text-xs font-medium text-sage uppercase tracking-wide mb-1">Good For</div>
+                <div className="text-sm text-sage-light">{neighborhood.goodFor.join(' · ')}</div>
               </div>
             </div>
-
-            <div className="px-5 space-y-4">
-              {/* Emily's Take - Featured prominently */}
-              <div className={`bg-sage p-5 relative overflow-hidden transition-all duration-500 delay-150 ${
-                showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}>
-                <Quote className="absolute top-3 right-3 w-8 h-8 text-white/10" />
-                <div className="flex items-center gap-2 mb-2">
-                  <Sparkles className="w-4 h-4 text-coral" />
-                  <span className="text-sm font-medium text-white">Emily&apos;s Take</span>
-                </div>
-                <p className="text-white/80 text-sm leading-relaxed relative z-10">
-                  &ldquo;{neighborhood.emilysTake}&rdquo;
-                </p>
+            <div className="flex items-start gap-3 bg-cream p-4">
+              <div className="w-10 h-10 rounded-full bg-coral/10 flex items-center justify-center flex-shrink-0">
+                <Home className="h-5 w-5 text-coral" />
               </div>
-
-              {/* Quick Facts */}
-              <div className="grid grid-cols-1 gap-3">
-                <div className={`flex items-start gap-3 bg-cream p-4 transition-all duration-500 delay-200 ${
-                  showContent ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-                }`}>
-                  <div className="w-10 h-10 rounded-full bg-coral/10 flex items-center justify-center flex-shrink-0">
-                    <Users className="h-5 w-5 text-coral" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-medium text-sage uppercase tracking-wide mb-1">Good For</div>
-                    <div className="text-sm text-sage-light">{neighborhood.goodFor.join(' · ')}</div>
-                  </div>
-                </div>
-                <div className={`flex items-start gap-3 bg-cream p-4 transition-all duration-500 delay-250 ${
-                  showContent ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-                }`}>
-                  <div className="w-10 h-10 rounded-full bg-coral/10 flex items-center justify-center flex-shrink-0">
-                    <Home className="h-5 w-5 text-coral" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-medium text-sage uppercase tracking-wide mb-1">Schools</div>
-                    <div className="text-sm text-sage-light">{neighborhood.schools}</div>
-                  </div>
-                </div>
+              <div>
+                <div className="text-xs font-medium text-sage uppercase tracking-wide mb-1">Schools</div>
+                <div className="text-sm text-sage-light">{neighborhood.schools}</div>
               </div>
-
-              {/* Favorite Spots - Horizontal Scroll on Mobile */}
-              <div className={`transition-all duration-500 delay-300 ${
-                showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}>
-                <div className="text-xs font-medium text-sage uppercase tracking-wide mb-3">My Favorite Spots</div>
-                <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
-                  {neighborhood.spots.map((spot, spotIndex) => (
-                    <div
-                      key={spot.name}
-                      className="flex items-center gap-2 bg-cream px-4 py-2.5 whitespace-nowrap flex-shrink-0 transition-all duration-300 hover:bg-coral hover:text-white group/spot"
-                      style={{ transitionDelay: `${350 + spotIndex * 50}ms` }}
-                    >
-                      {spot.type === 'coffee' && <Coffee className="h-4 w-4 text-coral group-hover/spot:text-white transition-colors" />}
-                      {spot.type === 'restaurant' && <Utensils className="h-4 w-4 text-coral group-hover/spot:text-white transition-colors" />}
-                      {spot.type === 'activity' && <Star className="h-4 w-4 text-coral group-hover/spot:text-white transition-colors" />}
-                      <span className="text-sm text-sage group-hover/spot:text-white transition-colors">{spot.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* CTA */}
-              <a
-                href={`sms:6787079385?body=Hi Emily! I'm interested in learning more about ${neighborhood.name}. What homes are available there?`}
-                className={`flex items-center justify-center gap-2 w-full bg-coral text-white py-4 px-4 font-medium text-sm transition-all duration-500 hover:bg-coral-dark hover:scale-[1.02] active:scale-[0.98] delay-350 ${
-                  showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                }`}
-              >
-                <MessageCircle className="h-4 w-4" />
-                Ask About {neighborhood.name}
-              </a>
             </div>
+          </div>
+
+          {/* Favorite Spots - Horizontal Scroll on Mobile */}
+          <div>
+            <div className="text-xs font-medium text-sage uppercase tracking-wide mb-3">My Favorite Spots</div>
+            <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
+              {neighborhood.spots.map((spot) => (
+                <div
+                  key={spot.name}
+                  className="flex items-center gap-2 bg-cream px-4 py-2.5 whitespace-nowrap flex-shrink-0"
+                >
+                  {spot.type === 'coffee' && <Coffee className="h-4 w-4 text-coral" />}
+                  {spot.type === 'restaurant' && <Utensils className="h-4 w-4 text-coral" />}
+                  {spot.type === 'activity' && <Star className="h-4 w-4 text-coral" />}
+                  <span className="text-sm text-sage">{spot.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA */}
+          <a
+            href={`sms:6787079385?body=Hi Emily! I'm interested in learning more about ${neighborhood.name}. What homes are available there?`}
+            className="flex items-center justify-center gap-2 w-full bg-coral text-white py-4 px-4 font-medium text-sm transition-all duration-300 hover:bg-coral-dark"
+          >
+            <MessageCircle className="h-4 w-4" />
+            Ask About {neighborhood.name}
+          </a>
           </div>
         </div>
       </div>
@@ -326,28 +281,10 @@ export default function NeighborhoodsPage() {
   const [isVisible, setIsVisible] = useState(false)
   const [expandedCard, setExpandedCard] = useState<string | null>(neighborhoods[0].name)
   const [selectedNeighborhood, setSelectedNeighborhood] = useState(neighborhoods[0])
-  const [isTransitioning, setIsTransitioning] = useState(false)
-  const [displayedNeighborhood, setDisplayedNeighborhood] = useState(neighborhoods[0])
-  const detailRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setIsVisible(true)
   }, [])
-
-  const handleNeighborhoodSelect = (neighborhood: typeof neighborhoods[0]) => {
-    if (neighborhood.name === selectedNeighborhood.name) return
-
-    setIsTransitioning(true)
-    setSelectedNeighborhood(neighborhood)
-
-    // After fade out, update displayed content and fade in
-    setTimeout(() => {
-      setDisplayedNeighborhood(neighborhood)
-      setTimeout(() => {
-        setIsTransitioning(false)
-      }, 50)
-    }, 300)
-  }
 
   const handleCardToggle = (name: string) => {
     setExpandedCard(expandedCard === name ? null : name)
@@ -418,21 +355,20 @@ export default function NeighborhoodsPage() {
               <h2 className="text-2xl md:text-3xl font-serif text-sage mb-2">Select a Neighborhood</h2>
               <p className="text-sage-light mb-6">Click to explore details</p>
               <div className="space-y-2">
-                {neighborhoods.map((neighborhood, index) => (
+                {neighborhoods.map((neighborhood) => (
                   <button
                     key={neighborhood.name}
-                    onClick={() => handleNeighborhoodSelect(neighborhood)}
-                    className={`w-full text-left p-4 transition-all duration-500 ease-out ${
+                    onClick={() => setSelectedNeighborhood(neighborhood)}
+                    className={`w-full text-left p-4 transition-all duration-300 ${
                       selectedNeighborhood.name === neighborhood.name
-                        ? 'bg-coral text-white shadow-soft-lg scale-[1.02]'
-                        : 'bg-white hover:shadow-soft hover:-translate-x-1 hover:scale-[1.01] text-sage'
+                        ? 'bg-coral text-white shadow-soft'
+                        : 'bg-white hover:shadow-soft hover:-translate-x-1 text-sage'
                     }`}
-                    style={{ transitionDelay: `${index * 30}ms` }}
                   >
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="font-medium">{neighborhood.name}</div>
-                        <div className={`text-sm transition-colors duration-300 ${
+                        <div className={`text-sm ${
                           selectedNeighborhood.name === neighborhood.name
                             ? 'text-white/80'
                             : 'text-sage-light'
@@ -440,10 +376,10 @@ export default function NeighborhoodsPage() {
                           {neighborhood.priceRange}
                         </div>
                       </div>
-                      <ArrowRight className={`w-4 h-4 transition-all duration-300 ${
+                      <ArrowRight className={`w-4 h-4 transition-all ${
                         selectedNeighborhood.name === neighborhood.name
-                          ? 'text-white translate-x-1 scale-110'
-                          : 'text-sage-light group-hover:translate-x-1'
+                          ? 'text-white translate-x-1'
+                          : 'text-sage-light'
                       }`} />
                     </div>
                   </button>
@@ -452,110 +388,93 @@ export default function NeighborhoodsPage() {
             </div>
 
             {/* Neighborhood Detail */}
-            <div className="lg:col-span-2" ref={detailRef}>
-              <div className={`bg-white shadow-soft overflow-hidden transition-all duration-500 ${
-                isTransitioning ? 'opacity-0 translate-y-4 scale-[0.98]' : 'opacity-100 translate-y-0 scale-100'
-              }`}>
+            <div className="lg:col-span-2">
+              <div className="bg-white shadow-soft overflow-hidden">
                 {/* Neighborhood Image Header */}
-                <div className="relative w-full h-[280px] overflow-hidden">
+                <div className="relative w-full h-[280px]">
                   <Image
-                    src={displayedNeighborhood.image}
-                    alt={displayedNeighborhood.name}
+                    src={selectedNeighborhood.image}
+                    alt={selectedNeighborhood.name}
                     fill
-                    className={`object-cover transition-all duration-700 ${
-                      isTransitioning ? 'scale-110 opacity-0' : 'scale-100 opacity-100'
-                    }`}
+                    className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 66vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-sage/80 via-sage/20 to-transparent" />
-                  <div className={`absolute bottom-6 left-8 right-8 transition-all duration-500 ${
-                    isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-                  }`}>
+                  <div className="absolute bottom-6 left-8 right-8">
                     <div className="flex items-center gap-3 mb-2 flex-wrap">
-                      <h2 className="text-3xl md:text-4xl font-serif text-white">{displayedNeighborhood.name}</h2>
+                      <h2 className="text-3xl md:text-4xl font-serif text-white">{selectedNeighborhood.name}</h2>
                       <span className="inline-flex items-center px-3 py-1 text-sm font-medium bg-white/20 backdrop-blur-sm text-white">
-                        {displayedNeighborhood.highlight}
+                        {selectedNeighborhood.highlight}
                       </span>
                     </div>
-                    <p className="text-white/90 text-lg">{displayedNeighborhood.vibe}</p>
+                    <p className="text-white/90 text-lg">{selectedNeighborhood.vibe}</p>
                   </div>
                 </div>
 
                 <div className="p-8 md:p-10">
-                  <div className={`grid md:grid-cols-2 gap-6 mb-8 transition-all duration-500 delay-100 ${
-                    isTransitioning ? 'opacity-0 translate-x-4' : 'opacity-100 translate-x-0'
-                  }`}>
-                    <div className="flex items-start gap-4 bg-cream p-5 hover:shadow-soft transition-shadow duration-300">
-                      <div className="w-12 h-12 rounded-full bg-coral/10 flex items-center justify-center flex-shrink-0">
-                        <DollarSign className="h-6 w-6 text-coral" />
-                      </div>
-                      <div>
-                        <div className="font-medium text-sage text-sm uppercase tracking-wider mb-1">Price Range</div>
-                        <div className="text-sage-light text-lg">{displayedNeighborhood.priceRange}</div>
-                      </div>
+
+                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                  <div className="flex items-start gap-4 bg-cream p-5">
+                    <div className="w-12 h-12 rounded-full bg-coral/10 flex items-center justify-center flex-shrink-0">
+                      <DollarSign className="h-6 w-6 text-coral" />
                     </div>
-                    <div className="flex items-start gap-4 bg-cream p-5 hover:shadow-soft transition-shadow duration-300">
-                      <div className="w-12 h-12 rounded-full bg-coral/10 flex items-center justify-center flex-shrink-0">
-                        <Users className="h-6 w-6 text-coral" />
-                      </div>
-                      <div>
-                        <div className="font-medium text-sage text-sm uppercase tracking-wider mb-1">Good For</div>
-                        <div className="text-sage-light">{displayedNeighborhood.goodFor.join(', ')}</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-4 bg-cream p-5 md:col-span-2 hover:shadow-soft transition-shadow duration-300">
-                      <div className="w-12 h-12 rounded-full bg-coral/10 flex items-center justify-center flex-shrink-0">
-                        <Home className="h-6 w-6 text-coral" />
-                      </div>
-                      <div>
-                        <div className="font-medium text-sage text-sm uppercase tracking-wider mb-1">Schools</div>
-                        <div className="text-sage-light">{displayedNeighborhood.schools}</div>
-                      </div>
+                    <div>
+                      <div className="font-medium text-sage text-sm uppercase tracking-wider mb-1">Price Range</div>
+                      <div className="text-sage-light text-lg">{selectedNeighborhood.priceRange}</div>
                     </div>
                   </div>
-
-                  <div className={`bg-sage p-6 md:p-8 mb-8 relative overflow-hidden transition-all duration-500 delay-150 ${
-                    isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-                  }`}>
-                    <Quote className="absolute top-4 right-4 w-12 h-12 text-white/10" />
-                    <div className="flex items-center gap-2 mb-3">
-                      <Sparkles className="w-5 h-5 text-coral" />
-                      <h3 className="font-medium text-white">Emily&apos;s Take</h3>
+                  <div className="flex items-start gap-4 bg-cream p-5">
+                    <div className="w-12 h-12 rounded-full bg-coral/10 flex items-center justify-center flex-shrink-0">
+                      <Users className="h-6 w-6 text-coral" />
                     </div>
-                    <p className="text-white/80 text-lg leading-relaxed relative z-10">&ldquo;{displayedNeighborhood.emilysTake}&rdquo;</p>
+                    <div>
+                      <div className="font-medium text-sage text-sm uppercase tracking-wider mb-1">Good For</div>
+                      <div className="text-sage-light">{selectedNeighborhood.goodFor.join(', ')}</div>
+                    </div>
                   </div>
+                  <div className="flex items-start gap-4 bg-cream p-5 md:col-span-2">
+                    <div className="w-12 h-12 rounded-full bg-coral/10 flex items-center justify-center flex-shrink-0">
+                      <Home className="h-6 w-6 text-coral" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-sage text-sm uppercase tracking-wider mb-1">Schools</div>
+                      <div className="text-sage-light">{selectedNeighborhood.schools}</div>
+                    </div>
+                  </div>
+                </div>
 
-                  <div className={`mb-8 transition-all duration-500 delay-200 ${
-                    isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-                  }`}>
-                    <h3 className="font-medium text-sage uppercase tracking-wider text-sm mb-4">My Favorite Spots</h3>
-                    <div className="grid grid-cols-3 gap-4">
-                      {displayedNeighborhood.spots.map((spot, spotIndex) => (
-                        <div
-                          key={spot.name}
-                          className="bg-cream p-5 text-center group hover:bg-sage hover:scale-105 hover:shadow-soft transition-all duration-300 cursor-pointer"
-                          style={{ transitionDelay: `${spotIndex * 50}ms` }}
-                        >
-                          <div className="w-10 h-10 rounded-full bg-coral/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-coral group-hover:scale-110 transition-all duration-300">
-                            {spot.type === 'coffee' && <Coffee className="h-5 w-5 text-coral group-hover:text-white transition-colors" />}
-                            {spot.type === 'restaurant' && <Utensils className="h-5 w-5 text-coral group-hover:text-white transition-colors" />}
-                            {spot.type === 'activity' && <Star className="h-5 w-5 text-coral group-hover:text-white transition-colors" />}
-                          </div>
-                          <div className="text-sm text-sage group-hover:text-white transition-colors">{spot.name}</div>
+                <div className="bg-sage p-6 md:p-8 mb-8 relative overflow-hidden">
+                  <Quote className="absolute top-4 right-4 w-12 h-12 text-white/10" />
+                  <div className="flex items-center gap-2 mb-3">
+                    <Sparkles className="w-5 h-5 text-coral" />
+                    <h3 className="font-medium text-white">Emily&apos;s Take</h3>
+                  </div>
+                  <p className="text-white/80 text-lg leading-relaxed relative z-10">&ldquo;{selectedNeighborhood.emilysTake}&rdquo;</p>
+                </div>
+
+                <div className="mb-8">
+                  <h3 className="font-medium text-sage uppercase tracking-wider text-sm mb-4">My Favorite Spots</h3>
+                  <div className="grid grid-cols-3 gap-4">
+                    {selectedNeighborhood.spots.map((spot) => (
+                      <div key={spot.name} className="bg-cream p-5 text-center group hover:bg-sage transition-colors duration-300">
+                        <div className="w-10 h-10 rounded-full bg-coral/10 flex items-center justify-center mx-auto mb-3 group-hover:bg-coral transition-colors duration-300">
+                          {spot.type === 'coffee' && <Coffee className="h-5 w-5 text-coral group-hover:text-white transition-colors" />}
+                          {spot.type === 'restaurant' && <Utensils className="h-5 w-5 text-coral group-hover:text-white transition-colors" />}
+                          {spot.type === 'activity' && <Star className="h-5 w-5 text-coral group-hover:text-white transition-colors" />}
                         </div>
-                      ))}
-                    </div>
+                        <div className="text-sm text-sage group-hover:text-white transition-colors">{spot.name}</div>
+                      </div>
+                    ))}
                   </div>
+                </div>
 
-                  <a
-                    href={`sms:6787079385?body=Hi Emily! I'm interested in learning more about ${displayedNeighborhood.name}. What homes are available there?`}
-                    className={`btn-primary inline-flex items-center gap-2 transition-all duration-500 delay-250 hover:scale-105 active:scale-95 ${
-                      isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-                    }`}
-                  >
-                    <MessageCircle className="h-4 w-4" />
-                    Ask About {displayedNeighborhood.name}
-                  </a>
+                <a
+                  href={`sms:6787079385?body=Hi Emily! I'm interested in learning more about ${selectedNeighborhood.name}. What homes are available there?`}
+                  className="btn-primary inline-flex items-center gap-2"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Ask About {selectedNeighborhood.name}
+                </a>
                 </div>
               </div>
             </div>
