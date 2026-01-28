@@ -19,19 +19,19 @@ const navigation = [
 const resourcesMenu = {
   tools: [
     {
-      name: 'Budget Calculator',
-      href: '/calculator',
-      description: 'What can you actually afford?',
-    },
-    {
-      name: 'House or Nah Quiz',
-      href: '/house-or-nah',
+      name: 'Buy or Bye Quiz',
+      href: '/buy-or-bye',
       description: 'Discover your style preferences',
     },
     {
       name: '$700K Showdown',
       href: '/showdown',
       description: 'Compare homes at same price point',
+    },
+    {
+      name: 'Off-Market Alerts',
+      href: '/off-market',
+      description: 'Get homes before they hit MLS',
     },
   ],
   explore: [
@@ -176,14 +176,14 @@ export function Header() {
                       <div className="mt-5 pt-5 border-t border-sand-light">
                         <div className="flex items-center justify-between">
                           <div>
-                            <span className="block font-medium text-sage text-sm">Off-Market Alerts</span>
-                            <span className="text-xs text-sage-light">Get homes before they hit MLS</span>
+                            <span className="block font-medium text-sage text-sm">Atlanta Neighborhoods</span>
+                            <span className="text-xs text-sage-light">Find the area that fits your lifestyle</span>
                           </div>
                           <Link
-                            href="/contact?interest=off-market"
+                            href="/neighborhoods"
                             className="text-sm font-medium text-coral hover:text-coral-dark transition-colors flex items-center gap-1"
                           >
-                            Sign Up
+                            Explore
                             <ArrowRight className="w-4 h-4" />
                           </Link>
                         </div>

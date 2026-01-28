@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, ArrowRight, Heart, X, RotateCcw, MessageCircle, Home, Sparkles } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Heart, X, RotateCcw, MessageCircle, Home, Sparkles, Map } from 'lucide-react'
 
 type HomeStyle = 'modern' | 'craftsman' | 'traditional' | 'contemporary' | 'farmhouse' | 'midcentury'
 
@@ -121,7 +121,8 @@ const styleDescriptions: Record<HomeStyle, { name: string; description: string; 
   }
 }
 
-export default function HouseOrNahPage() {
+export default function BuyOrByePage() {
+  const [showIntro, setShowIntro] = useState(true)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [votes, setVotes] = useState<Record<HomeStyle, number>>({
     modern: 0,
@@ -173,6 +174,7 @@ export default function HouseOrNahPage() {
       midcentury: 0
     })
     setShowResults(false)
+    setShowIntro(true)
   }
 
   const getTopStyles = () => {
@@ -190,10 +192,68 @@ export default function HouseOrNahPage() {
   // Keyboard navigation
   if (typeof window !== 'undefined') {
     document.onkeydown = (e) => {
-      if (showResults) return
+      if (showResults || showIntro) return
       if (e.key === 'ArrowLeft') handleVote(false)
       if (e.key === 'ArrowRight') handleVote(true)
     }
+  }
+
+  // Intro screen
+  if (showIntro) {
+    return (
+      <main className="min-h-screen bg-gradient-to-br from-sage via-sage-dark to-sage flex items-center justify-center">
+        <div className="container-width px-6 py-12">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors mb-12"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Home
+          </Link>
+
+          <div className="max-w-xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 bg-coral/20 text-coral px-4 py-2 rounded-full text-sm font-medium mb-8">
+              <Sparkles className="w-4 h-4" />
+              Style Quiz
+            </div>
+
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-6">
+              Buy or Bye
+            </h1>
+
+            <p className="text-xl text-white/80 leading-relaxed mb-8">
+              Not sure what style home you&apos;re looking for? We&apos;ll help you figure it out.
+            </p>
+
+            <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg mb-10 text-left">
+              <h3 className="text-white font-medium mb-4">Here&apos;s how it works:</h3>
+              <ul className="space-y-3 text-white/80">
+                <li className="flex items-start gap-3">
+                  <Heart className="w-5 h-5 text-coral flex-shrink-0 mt-0.5" />
+                  <span>Swipe right (or tap the heart) on homes you love</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <X className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                  <span>Swipe left (or tap X) on homes that aren&apos;t your style</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Home className="w-5 h-5 text-coral flex-shrink-0 mt-0.5" />
+                  <span>We&apos;ll show you which neighborhoods match your taste</span>
+                </li>
+              </ul>
+            </div>
+
+            <button
+              onClick={() => setShowIntro(false)}
+              className="btn-primary inline-flex items-center justify-center gap-2 text-lg px-10 py-4"
+            >
+              Let&apos;s Go
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </main>
+    )
   }
 
   if (showResults) {
@@ -235,7 +295,7 @@ export default function HouseOrNahPage() {
                 <Home className="w-5 h-5 text-coral" />
                 Neighborhoods You&apos;ll Love
               </h3>
-              <div className="flex flex-wrap justify-center gap-3">
+              <div className="flex flex-wrap justify-center gap-3 mb-6">
                 {primaryInfo.neighborhoods.map(hood => (
                   <span
                     key={hood}
@@ -245,6 +305,14 @@ export default function HouseOrNahPage() {
                   </span>
                 ))}
               </div>
+              <Link
+                href="/neighborhoods"
+                className="inline-flex items-center gap-2 text-coral font-medium hover:gap-3 transition-all"
+              >
+                <Map className="w-4 h-4" />
+                Explore the Neighborhood Guide
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
 
             {/* Secondary Style */}
@@ -261,7 +329,7 @@ export default function HouseOrNahPage() {
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <a
-                href={`sms:6787079385?body=Hi Emily! I just took the House or Nah quiz and I'm a ${primaryInfo.name}. Can you help me find homes in ${primaryInfo.neighborhoods[0]}?`}
+                href={`sms:6787079385?body=Hi Emily! I just took the Buy or Bye quiz and I'm a ${primaryInfo.name}. Can you help me find homes in ${primaryInfo.neighborhoods[0]}?`}
                 className="btn-primary inline-flex items-center justify-center gap-2"
               >
                 <MessageCircle className="w-4 h-4" />
@@ -289,7 +357,7 @@ export default function HouseOrNahPage() {
     <main className="min-h-screen bg-gradient-to-br from-sage via-sage-dark to-sage overflow-hidden">
       <div className="container-width px-6 py-8 md:py-12">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-6">
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors"
@@ -298,19 +366,29 @@ export default function HouseOrNahPage() {
             <span className="hidden sm:inline">Back</span>
           </Link>
 
-          <h1 className="text-xl md:text-2xl font-serif text-white">House or Nah?</h1>
+          <h1 className="text-xl md:text-2xl font-serif text-white">Buy or Bye</h1>
 
-          <span className="text-white/70 text-sm">
-            {currentIndex + 1} / {homes.length}
-          </span>
+          {/* More visible page number */}
+          <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+            <span className="text-white font-medium text-sm">
+              {currentIndex + 1} <span className="text-white/60">of</span> {homes.length}
+            </span>
+          </div>
         </div>
 
-        {/* Progress Bar */}
-        <div className="w-full h-1 bg-white/20 rounded-full mb-8 overflow-hidden">
-          <div
-            className="h-full bg-coral transition-all duration-300 ease-out"
-            style={{ width: `${progress}%` }}
-          />
+        {/* Progress Bar with percentage */}
+        <div className="mb-8">
+          <div className="w-full h-2 bg-white/20 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-coral transition-all duration-300 ease-out"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <div className="flex justify-between mt-2">
+            <span className="text-white/50 text-xs">Start</span>
+            <span className="text-white/70 text-xs font-medium">{Math.round(progress)}% complete</span>
+            <span className="text-white/50 text-xs">Finish</span>
+          </div>
         </div>
 
         {/* Card Stack */}
@@ -345,12 +423,12 @@ export default function HouseOrNahPage() {
             <div className={`absolute top-6 left-6 px-4 py-2 rounded-lg border-4 border-red-500 text-red-500 font-bold text-2xl rotate-[-20deg] transition-opacity ${
               swipeDirection === 'left' ? 'opacity-100' : 'opacity-0'
             }`}>
-              NAH
+              BYE
             </div>
             <div className={`absolute top-6 right-6 px-4 py-2 rounded-lg border-4 border-green-500 text-green-500 font-bold text-2xl rotate-[20deg] transition-opacity ${
               swipeDirection === 'right' ? 'opacity-100' : 'opacity-0'
             }`}>
-              YES!
+              BUY!
             </div>
           </div>
 
@@ -376,7 +454,7 @@ export default function HouseOrNahPage() {
             onClick={() => handleVote(false)}
             disabled={isAnimating}
             className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm border-2 border-white/30 flex items-center justify-center text-white hover:bg-red-500/20 hover:border-red-400 hover:text-red-400 transition-all duration-200 disabled:opacity-50"
-            aria-label="Nah"
+            aria-label="Bye"
           >
             <X className="w-8 h-8" />
           </button>
@@ -385,7 +463,7 @@ export default function HouseOrNahPage() {
             onClick={() => handleVote(true)}
             disabled={isAnimating}
             className="w-20 h-20 rounded-full bg-coral border-4 border-coral-dark flex items-center justify-center text-white hover:scale-110 hover:shadow-glow transition-all duration-200 disabled:opacity-50"
-            aria-label="House!"
+            aria-label="Buy!"
           >
             <Heart className="w-10 h-10" />
           </button>
@@ -393,7 +471,7 @@ export default function HouseOrNahPage() {
 
         {/* Instructions */}
         <p className="text-center text-white/50 text-sm mt-6">
-          Swipe right or press <kbd className="px-2 py-1 bg-white/10 rounded">→</kbd> for homes you love
+          Swipe right or press <kbd className="px-2 py-1 bg-white/10 rounded">→</kbd> for homes you&apos;d buy
         </p>
       </div>
     </main>

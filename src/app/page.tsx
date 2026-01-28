@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, MessageCircle, Home, Map, Calculator, Bell, Users, Star, Clock, DollarSign, Award, CheckCircle, Sparkles, TrendingUp, Heart, Shield } from 'lucide-react'
+import { ArrowRight, MessageCircle, Home, Map, Bell, Users, Star, CheckCircle, Sparkles, TrendingUp, Heart, Shield } from 'lucide-react'
 
 const stats = [
   { value: '400+', label: 'Homes Sold', description: 'Metro Atlanta' },
-  { value: '$197K', label: 'Saved Under Ask', description: 'For Buyers' },
-  { value: '90', label: '5-Star Reviews', description: 'And Counting' },
-  { value: '4', label: 'Days on Market', description: 'Median Time' },
+  { value: '$475K+', label: 'Saved for Buyers', description: 'In 2025' },
+  { value: '110+', label: '5-Star Google Reviews', description: 'And Counting' },
+  { value: '54', label: 'Homes Sold', description: 'In 2025' },
 ]
 
 const testimonials = [
@@ -50,10 +50,10 @@ const team = [
 
 const features = [
   {
-    title: 'House or Nah?',
+    title: 'Buy or Bye',
     description: 'Swipe through homes to discover your style. Modern? Craftsman? We\'ll learn what makes you say "that\'s the one."',
     icon: Sparkles,
-    href: '/house-or-nah',
+    href: '/buy-or-bye',
     cta: 'Take the Quiz'
   },
   {
@@ -74,15 +74,15 @@ const features = [
     title: 'Off-Market Alerts',
     description: 'Get homes before they hit MLS. We have access to off-market listings most buyers never see.',
     icon: Bell,
-    href: '/contact?interest=off-market',
+    href: '/off-market',
     cta: 'Sign Up for Alerts'
   },
   {
-    title: 'Budget Calculator',
-    description: 'What you can actually afford vs. what you qualify for. The honest numbers most agents won\'t tell you.',
-    icon: Calculator,
-    href: '/calculator',
-    cta: 'Calculate Now'
+    title: 'Atlanta Neighborhoods',
+    description: 'A breakdown of the different areas around town. Find the neighborhood that fits your lifestyle.',
+    icon: Home,
+    href: '/neighborhoods',
+    cta: 'Explore Areas'
   },
   {
     title: 'Meet the Team',
@@ -154,7 +154,7 @@ export default function HomePage() {
 
                 {/* Subheadline */}
                 <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-10 max-w-lg">
-                  No pressure. No games. Just honest guidance from a team who&apos;s helped 400+ families find home.
+                  No pressure or sales pitch. Just honest guidance from a team who won&apos;t stop working until you&apos;re where you need to be.
                 </p>
 
                 {/* CTA Buttons */}
@@ -164,7 +164,7 @@ export default function HomePage() {
                     className="group inline-flex items-center justify-center gap-3 bg-coral text-white px-8 py-4 text-sm font-medium tracking-wider uppercase hover:bg-coral-dark transition-all duration-300"
                   >
                     <MessageCircle className="w-4 h-4" />
-                    Text Us a Listing
+                    Get Feedback on a Listing
                   </a>
                   <Link
                     href="/contact"
@@ -182,12 +182,12 @@ export default function HomePage() {
                     <span className="text-xs text-white/60 uppercase tracking-wider">Homes Sold</span>
                   </div>
                   <div>
-                    <span className="block text-3xl md:text-4xl font-serif text-white">$197K</span>
-                    <span className="text-xs text-white/60 uppercase tracking-wider">Saved for Buyers</span>
+                    <span className="block text-3xl md:text-4xl font-serif text-white">$475K+</span>
+                    <span className="text-xs text-white/60 uppercase tracking-wider">Saved for Buyers in 2025</span>
                   </div>
                   <div>
-                    <span className="block text-3xl md:text-4xl font-serif text-white">90+</span>
-                    <span className="text-xs text-white/60 uppercase tracking-wider">5-Star Reviews</span>
+                    <span className="block text-3xl md:text-4xl font-serif text-white">110+</span>
+                    <span className="text-xs text-white/60 uppercase tracking-wider">5-Star Google Reviews</span>
                   </div>
                 </div>
               </div>
@@ -208,15 +208,16 @@ export default function HomePage() {
                   </div>
 
                   {/* Floating Card */}
-                  <div className="absolute -bottom-6 -left-6 bg-white p-6 shadow-soft-lg max-w-[260px]">
-                    <p className="text-sage text-sm font-medium mb-2">Meet Your Team</p>
-                    <p className="text-sage-light text-sm leading-relaxed">
-                      Three people who genuinely care about getting you into the right home.
-                    </p>
-                    <Link href="/about" className="inline-flex items-center gap-1.5 text-coral text-sm font-medium mt-3 hover:gap-2.5 transition-all">
-                      About Us <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
+                  <Link
+                    href="/about"
+                    className="absolute -bottom-4 -left-4 bg-white/95 backdrop-blur-sm px-5 py-3 shadow-soft-lg flex items-center gap-3 hover:bg-white transition-all group"
+                  >
+                    <div className="w-8 h-8 bg-coral/10 rounded-full flex items-center justify-center">
+                      <Users className="w-4 h-4 text-coral" />
+                    </div>
+                    <span className="text-sage text-sm font-medium">Meet the Team</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-coral group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -246,14 +247,14 @@ export default function HomePage() {
                 Business relationally,<br />
                 <span className="text-coral">not transactionally.</span>
               </h2>
-              <p className="body-large mb-8">
-                We believe in doing business relationally and not transactionally. Achieving your
-                home goals is always our top priority, whether you&apos;re buying, selling, or just
-                a homeowner looking for some advice.
+              <p className="body-large mb-6">
+                Working with our team means you&apos;ve always got someone in your corner. Buying or selling solo, with a partner, with your whole family weighing in—we make room for everyone&apos;s voice.
+              </p>
+              <p className="body-text mb-6">
+                We&apos;ve had parents at inspections, coworkers at showings, and spreadsheets full of questions sent from the friend group chat. Your people become our people and we welcome everyone.
               </p>
               <p className="body-text mb-8">
-                We have proven systems in place to set you up for success every step of the way.
-                Let us be your first call when it comes to your home!
+                If you&apos;re nervous about next steps? Don&apos;t be. We&apos;ve done this hundreds of times, we have a trusted vendor for everything, and we know exactly how to walk you through it.
               </p>
               <Link
                 href="/about"
@@ -304,7 +305,7 @@ export default function HomePage() {
         <div className="container-width relative z-10">
           <div className="text-center mb-12">
             <span className="text-coral font-medium tracking-wider uppercase text-sm">
-              End of Year Recap
+              2025 Numbers That Matter to Us
             </span>
             <h2 className="text-3xl md:text-4xl font-serif text-white mt-4">
               The Numbers Don&apos;t Lie
@@ -313,24 +314,24 @@ export default function HomePage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-5xl md:text-6xl font-serif text-coral font-light">$121K</div>
-              <div className="text-sm text-white/70 mt-2 uppercase tracking-wider">Money Received</div>
-              <div className="text-xs text-white/50 mt-1">For Clients in Grants</div>
+              <div className="text-5xl md:text-6xl font-serif text-coral font-light">$3.3M</div>
+              <div className="text-sm text-white/70 mt-2 uppercase tracking-wider">Off-Market Sales</div>
+              <div className="text-xs text-white/50 mt-1">Before They Hit MLS</div>
             </div>
             <div className="text-center">
-              <div className="text-5xl md:text-6xl font-serif text-coral font-light">$197K</div>
+              <div className="text-5xl md:text-6xl font-serif text-coral font-light">45K</div>
+              <div className="text-sm text-white/70 mt-2 uppercase tracking-wider">Social Media Views</div>
+              <div className="text-xs text-white/50 mt-1">On Our Listings</div>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl md:text-6xl font-serif text-coral font-light">54</div>
+              <div className="text-sm text-white/70 mt-2 uppercase tracking-wider">Homes Sold</div>
+              <div className="text-xs text-white/50 mt-1">This Year</div>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl md:text-6xl font-serif text-coral font-light">$327K</div>
               <div className="text-sm text-white/70 mt-2 uppercase tracking-wider">Negotiated Under</div>
               <div className="text-xs text-white/50 mt-1">Ask Price</div>
-            </div>
-            <div className="text-center">
-              <div className="text-5xl md:text-6xl font-serif text-coral font-light">$8K</div>
-              <div className="text-sm text-white/70 mt-2 uppercase tracking-wider">Average Closing</div>
-              <div className="text-xs text-white/50 mt-1">Cost Received</div>
-            </div>
-            <div className="text-center">
-              <div className="text-5xl md:text-6xl font-serif text-coral font-light">35</div>
-              <div className="text-sm text-white/70 mt-2 uppercase tracking-wider">Zip Codes</div>
-              <div className="text-xs text-white/50 mt-1">We&apos;ve Sold In</div>
             </div>
           </div>
         </div>
@@ -343,10 +344,7 @@ export default function HomePage() {
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="accent-line-center" />
             </div>
-            <h2 className="heading-xl mb-4">What Do You Need?</h2>
-            <p className="body-large max-w-2xl mx-auto">
-              Skip the generic real estate experience. Here are tools that actually help.
-            </p>
+            <h2 className="heading-xl">Choose Your Own Adventure</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -497,7 +495,7 @@ export default function HomePage() {
             </div>
             <h2 className="heading-xl mb-4">What People Say</h2>
             <p className="body-large max-w-2xl mx-auto">
-              90+ five-star reviews can&apos;t be wrong. Here&apos;s what our clients have to say.
+              110+ five-star Google reviews can&apos;t be wrong. Here&apos;s what our clients have to say.
             </p>
           </div>
 
